@@ -1,72 +1,101 @@
-# LangChain ReAct Agent Implementation
+# WriteSense: Text Editor Accessibility Assistant
 
-This repository contains examples of ReAct agents implemented using LangChain and LangGraph. The ReAct pattern (Reasoning + Acting) enables agents to reason about tasks and take actions in an iterative process.
+This project implements a voice-controlled text editor assistant designed to help users with accessibility needs. It uses LangChain, LangGraph's ReAct agents, and OpenAI's models to provide an intelligent interface for navigating, editing, and formatting text documents through natural language commands.
+
+## Project Structure
+
+- `api.py` - Flask API server implementing the ReAct agent with various accessibility tools
+- `tools.py` - Definitions of all the tools the agent can use for text editing operations
+- `streamlit_app.py` - Streamlit web interface to interact with the API
+- `test_api.py` - Tests for the API endpoints
+- `react_agent.py` - Example implementation of a basic LangChain ReAct agent
 
 ## Requirements
 
 ```
-pip install langchain langchain-openai langgraph
+pip install -r requirements.txt
 ```
 
-You'll need to set your OpenAI API key:
+Required dependencies:
 
-```python
-import os
-os.environ["OPENAI_API_KEY"] = "your-api-key-here"
-```
+- flask
+- langchain
+- langchain-openai
+- langgraph
+- requests
+- streamlit
 
-## Examples
-
-### 1. Basic ReAct Agent (`react_agent.py`)
-
-A simple implementation of a ReAct agent using LangGraph's prebuilt helper. This agent can:
-
-- Search for information (mock implementation)
-- Perform calculations
+You'll need to set your OpenAI API key in your environment variables or in the `.env` file:
 
 ```
-python react_agent.py
+OPENAI_API_KEY=your-api-key-here
 ```
 
-### 2. Advanced ReAct Agent with RAG (`advanced_react_agent.py`)
+## Running the Application
 
-A more advanced implementation that incorporates Retrieval Augmented Generation (RAG):
-
-- In-memory document store for knowledge retrieval
-- Web search capability (mock implementation)
-- Calculator functionality
+1. Start the API server:
 
 ```
-python advanced_react_agent.py
+python api.py
 ```
 
-### 3. Custom ReAct Agent (`custom_react_agent.py`)
-
-A fully customized implementation that demonstrates:
-
-- Manual control of the ReAct agent's behavior
-- Explicit reasoning steps (THINK → TOOL → OBSERVE → RESPOND)
-- Custom state management
-- Multi-turn conversation handling
+2. Start the Streamlit web interface:
 
 ```
-python custom_react_agent.py
+streamlit run streamlit_app.py
 ```
 
-## How ReAct Works
+## Capabilities
 
-The ReAct pattern follows this general flow:
+The assistant provides the following categories of text editing functionality:
 
-1. The model **reasons** about what step to take in response to a user input
-2. The model chooses an **action** (tool) and generates arguments for it
-3. The agent execution runtime calls the chosen tool with the generated arguments
-4. The results are returned to the model as an observation
-5. The process repeats until the agent decides to respond directly to the user
+### Reading and Navigation
 
-## Differences Between Implementations
+- Read text by character, word, line, paragraph, etc.
+- Move cursor to various positions
+- Find specific text in the document
 
-- **Basic**: Uses the prebuilt helper for quick implementation
-- **Advanced**: Adds RAG capabilities to enhance the agent's knowledge
-- **Custom**: Demonstrates full control over the agent's behavior through LangGraph's StateGraph
+### Text Manipulation
 
-For more information on LangChain agents and tools, refer to the [LangChain documentation](https://python.langchain.com/docs/concepts/).
+- Select, modify, and clear text selections
+- Insert, delete, and replace text
+- Copy, cut, and paste operations
+- Undo and redo edits
+
+### Formatting and File Management
+
+- Apply various text formatting (bold, italic, etc.)
+- Create headings, lists, and tables
+- Open, save, and manage files
+
+### Accessibility Features
+
+- Control text-to-speech settings
+- Manage editor modes and display options
+- Get help with commands and features
+
+## How It Works
+
+The system uses LangGraph's ReAct (Reasoning + Acting) agent pattern:
+
+1. The user inputs a natural language command
+2. The AI agent reasons about which tool to use
+3. The appropriate tool is executed
+4. Results are returned to the user
+
+All interactions are designed to be screen-reader friendly and optimized for accessibility.
+
+## API Documentation
+
+For detailed API documentation, refer to the `API_README.md` file.
+
+## Streamlit Interface
+
+The Streamlit interface provides:
+
+- A command input field
+- Command history with detailed execution steps
+- Example commands to get started
+- List of available tools and their descriptions
+
+For details on the Streamlit interface, refer to the `STREAMLIT_README.md` file.

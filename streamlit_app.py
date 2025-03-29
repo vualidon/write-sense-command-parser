@@ -4,7 +4,7 @@ import json
 from datetime import datetime
 
 # API endpoint - adjust if your Flask API is running on a different host/port
-API_URL = "http://localhost:5001/api"
+API_URL = "http://localhost:5000/api"
 
 def get_tools():
     """Fetch available tools from the API"""
